@@ -21,15 +21,15 @@ int main()
 
         if (game.result == 1)
         {
-            std::cout << "You Win";
+            std::cout << "You Win!";
         }
         else if (game.result == 2) 
         {
-            std::cout << "You Lose";
+            std::cout << "You Lose!";
         }
         else
         {
-            std::cout << "Tie";
+            std::cout << "Tie!";
         }
 
         std::cout << std::endl << "Wins: " + std::to_string(game.wins) << " Losses: " + std::to_string(game.losses) << " Ties: " + std::to_string(game.ties) << std::endl;
