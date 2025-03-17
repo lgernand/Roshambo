@@ -23,7 +23,7 @@ int main()
         {
             std::cout << "You Win!";
         }
-        else if (game.result == 2) 
+        else if (game.result == -1) 
         {
             std::cout << "You Lose!";
         }

@@ -15,6 +15,15 @@ public:
     int wins;
     int losses;
     int ties;
+    int victory_condition[5][5] = {
+        // comp
+        //r p  s l  s
+        /*player r*/{0,1,-1,-1,1},
+        /*p*/ {-1,0,1,1,-1},
+        /*s*/ { 1,-1,0,-1,1 },
+        /*l*/ { 1,-1,1,0,-1 },
+        /*s*/ { -1,1,-1,1,0 }
+    };
 
 
     game()
@@ -27,6 +36,8 @@ public:
         selection_map.insert(std::pair<int, std::string>(1, "Rock"));
         selection_map.insert(std::pair<int, std::string>(2, "Paper"));
         selection_map.insert(std::pair<int, std::string>(3, "Shears"));
+        selection_map.insert(std::pair<int, std::string>(4, "Lizard"));
+        selection_map.insert(std::pair<int, std::string>(5, "Spock"));
 
         comp = new rps::computer_player();
         me = new rps::human_player();
@@ -50,13 +61,13 @@ public:
 
     void determine_winner()
     {
-        result = (3 + (me->get_selection() - 1) - (comp->get_selection() - 1)) % 3;
+        result = this->victory_condition[me->selection-1][comp->selection-1];
 
         if (result == 1)
         {
             wins += 1;
         } 
-        else if (result == 2)
+        else if (result == -1)
         {
             losses += 1;
         }
