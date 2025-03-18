@@ -24,6 +24,7 @@
     <ProjectGuid>{1d57f28f-224b-4d22-a516-3ab04aaaffa7}</ProjectGuid>
     <RootNamespace>rockpapershears</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Roshambo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -132,7 +133,7 @@
     <ClCompile Include="human_player.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="ring.cpp" />
-    <ClCompile Include="rockpapershears.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="computer_player.h" />
