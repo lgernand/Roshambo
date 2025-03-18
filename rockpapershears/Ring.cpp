@@ -1,4 +1,5 @@
 #include "ring.h"
+#include <iostream>
 
 namespace rps
 {
@@ -9,13 +10,25 @@ namespace rps
 		price = 5;
 	}
 
-	int barber_ring::apply_effect(rps::human_player* player, int base_points)
+	int barber_ring::apply_effect(int criteria, int base_points) const
 	{
-		if (player->selection == 3)
+		if (criteria == 3)
 		{
-			"Barber Bonus! base points * 2";
+			std::cout << "Barber Bonus! base points * 2!" << std::endl;
 			return base_points * 2;
 		}
 		return base_points;
 	}
+
+	/*best_two_of_three_ring::best_two_of_three_ring()
+	{
+		ring_name = "Best Two out of Three";
+		rarity = 1;
+		price = 5;
+	}
+
+	int  best_two_of_three_ring::apply_effect(int criteria, int base_points) const
+	{
+		if 
+	}*/
 }

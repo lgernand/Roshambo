@@ -5,7 +5,8 @@ namespace rps
 {
     human_player::human_player() 
     {
-       // auto test_ring = new barber_ring();
+        barber_ring* test_ring = new barber_ring();
+        this->rings.push_back(test_ring);
     }
 
     void human_player::make_selection() const
@@ -17,6 +18,11 @@ namespace rps
     void human_player::give_points()
     {
         int base_points = 50;
+        for (auto &ring : this->rings)
+        {
+            base_points = ring->apply_effect(this->selection, base_points);
+        }
+
         points += base_points;
     }
 
