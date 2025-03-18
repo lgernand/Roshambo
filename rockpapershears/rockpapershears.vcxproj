@@ -130,6 +130,7 @@
     <ClCompile Include="computer_player.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="human_player.cpp" />
+    <ClCompile Include="Ring.cpp" />
     <ClCompile Include="rockpapershears.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="human_player.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="Ring.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

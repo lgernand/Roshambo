@@ -24,8 +24,5 @@ int main()
 
             game.initialize_game();
         }
-        
-        std::cout << std::endl << "exit?";
-        std::cin >> end;
     }
 }

@@ -92,7 +92,7 @@ public:
             ante_points *= 1.5;
         }
 
-        me->points = 0;ed
+        me->points = 0;
         wins = 0;
         losses = 0;
         ties = 0;
@@ -100,7 +100,7 @@ public:
 
     void play_round()
     {
-        std::cout << "Level " + std::to_string(this->level) << std::endl;
+        std::cout << "Level " + std::to_string(this->level) + ". Points to gain " + std::to_string(ante_points) << std::endl;
 
         rounds = 0;
 
@@ -117,6 +117,9 @@ public:
         if (me->points >= ante_points)
         {
             level += 1;
+            std::cout << std::endl << "Round Survived!" << std::endl;
+            me->award_money();
+            std::cout << std::endl << "Next Level!" << std::endl;
         } 
         else 
         { 
