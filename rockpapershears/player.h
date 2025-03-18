@@ -7,9 +7,9 @@ namespace rps
 {
     class player {
     public:
-        int selection;
+        mutable int selection;
 
-        virtual void make_selection();
+        virtual void make_selection() const = 0;
 
         int get_selection();
     };

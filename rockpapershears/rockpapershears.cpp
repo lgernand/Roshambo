@@ -2,7 +2,7 @@
 
 int main()
 {   
-    game game;
+    rps::game game;
     
     for (auto i = game.selection_map.begin(); i != game.selection_map.end(); i++)
     {

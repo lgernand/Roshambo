@@ -2,10 +2,6 @@
 #define HUMAN_PLAYER_H
 
 #include "player.h"
-#include <string>
-#include <list>
-#include "Ring.h"
-
 
 namespace rps
 {
@@ -14,11 +10,11 @@ namespace rps
         int points = 0;
         int money = 0;
 
-        std::list<ring> rings;
+        //std::list<ring> rings;
 
         human_player();
 
-        void make_selection() override;
+        void make_selection() const;
 
         void give_points();
 

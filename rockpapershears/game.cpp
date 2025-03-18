@@ -1,43 +1,21 @@
 #include "game.h"
 
-class game {
-public:
-    std::map<int, std::string> selection_map;
-    rps::computer_player* comp;
-    rps::human_player* me;
-    int round_result;
-    int wins;
-    int losses;
-    int ties;
-    int victory_condition[5][5] = {
-        // comp
-//            r p  s
-        /*player r*/{ 0,-1,1 },
-        /*p*/{ 1,0,-1 },
-        /*s*/{ -1,1,0 },
-    };
+namespace rps
+{
 
-    int ante_points;
-
-    int rounds;
-
-    int level;
-
-    bool game_over;
-
-    game()
+    game::game()
     {
         initialize_game();
     }
 
-    void initialize_game()
+    void game::initialize_game()
     {
         selection_map.insert(std::pair<int, std::string>(1, "Rock"));
         selection_map.insert(std::pair<int, std::string>(2, "Paper"));
         selection_map.insert(std::pair<int, std::string>(3, "Shears"));
 
-        comp = new rps::computer_player();
-        me = new rps::human_player();
+        comp = new computer_player();
+        me = new human_player();
 
         level = 0;
 
@@ -46,19 +24,19 @@ public:
         ante_points = 25;
     }
 
-    void make_selections()
+    void game::make_selections()
     {
         me->make_selection();
         comp->make_selection();
     }
 
-    void print_computer_selection()
+    void game::print_computer_selection()
     {
         std::cout << std::endl << "You Selected: " + selection_map.at(me->selection) << std::endl;
         std::cout << "Computer Selected: " + selection_map.at(comp->selection) << std::endl << std::endl;
     }
 
-    void determine_winner()
+    void game::determine_winner()
     {
         round_result = this->victory_condition[me->selection - 1][comp->selection - 1];
 
@@ -79,7 +57,7 @@ public:
         }
     }
 
-    void initialize_round()
+    void game::initialize_round()
     {
         if (level > 0)
         {
@@ -92,7 +70,7 @@ public:
         ties = 0;
     }
 
-    void play_round()
+    void game::play_round()
     {
         std::cout << "Level " + std::to_string(this->level) + ". Points to gain " + std::to_string(ante_points) << std::endl;
 

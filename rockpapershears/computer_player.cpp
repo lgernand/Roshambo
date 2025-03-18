@@ -2,15 +2,13 @@
 
 namespace rps
 {
-    class computer_player : public player {
-    public:
-        computer_player() {
+    computer_player::computer_player() 
+    {
 
-        }
+    }
 
-        void make_selection() override
-        {
-            this->selection = (rand() * 1.0 / RAND_MAX * 3) + 1;
-        }
-    };
+    void computer_player::make_selection() const
+    {
+        this->selection = (rand() * 1.0 / RAND_MAX * 3) + 1;
+    }
 }
