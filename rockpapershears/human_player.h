@@ -1,20 +1,26 @@
-#include "player.h"
+#ifndef HUMAN_PLAYER_H
+#define HUMAN_PLAYER_H
 
-#pragma once
+#include "player.h"
 
 namespace rps
 {
     class human_player : public player {
     public:
-        human_player() {
+        int points = 0;
+        int money = 0;
 
-        }
+        //std::list<ring> rings;
 
-        void make_selection() override
-        {
-            std::cout << "Make a selection: ";
-            std::cin >> this->selection;
-        }
+        human_player();
+
+        void make_selection() const;
+
+        void give_points();
+
+        void award_money();
     };
 
 }
+
+#endif
