@@ -12,28 +12,19 @@ int main()
 
     bool end = false;
     while (!end)
-    { 
-        game.make_selections();
+    {
+        game.initialize_round();
 
-        game.print_computer_selection();
+        game.play_round();
+
+        if (game.game_over == true)
+        {
+            std::cout << "GAME OVER!";
+            end = true;
+
+            game.initialize_game();
+        }
         
-        game.determine_winner();
-
-        if (game.result == 1)
-        {
-            std::cout << "You Win!";
-        }
-        else if (game.result == -1) 
-        {
-            std::cout << "You Lose!";
-        }
-        else
-        {
-            std::cout << "Tie!";
-        }
-
-        std::cout << std::endl << "Wins: " + std::to_string(game.wins) << " Losses: " + std::to_string(game.losses) << " Ties: " + std::to_string(game.ties) << std::endl;
-
         std::cout << std::endl << "exit?";
         std::cin >> end;
     }

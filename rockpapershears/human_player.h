@@ -6,6 +6,9 @@ namespace rps
 {
     class human_player : public player {
     public:
+        int points = 0;
+        int money;
+
         human_player() {
 
         }
@@ -14,6 +17,11 @@ namespace rps
         {
             std::cout << "Make a selection: ";
             std::cin >> this->selection;
+        }
+
+        void give_points()
+        {
+            points += 50;
         }
     };
 
