@@ -1,6 +1,9 @@
-#include <string>
+#ifndef RING_H
+#define RING_H
 
-#pragma once
+#include "game.h"
+#include "human_player.h"
+
 class ring
 {
 public:
@@ -14,8 +17,9 @@ public:
 class barber_ring : ring
 {
 public:
-	barber_ring()
-	{
-		rarity = 1;
-	}
+	barber_ring();
+
+	int apply_effect(rps::human_player player, int base_points);
 };
+
+#endif

@@ -1,7 +1,11 @@
+#ifndef HUMAN_PLAYER_H
+#define HUMAN_PLAYER_H
+
 #include "player.h"
 #include <string>
+#include <list>
+#include "Ring.h"
 
-#pragma once
 
 namespace rps
 {
@@ -10,28 +14,17 @@ namespace rps
         int points = 0;
         int money = 0;
 
-        human_player() {
+        std::list<ring> rings;
 
-        }
+        human_player();
 
-        void make_selection() override
-        {
-            std::cout << "Make a selection: ";
-            std::cin >> this->selection;
-        }
+        void make_selection() override;
 
-        void give_points()
-        {
-            points += 50;
-        }
+        void give_points();
 
-        void award_money()
-        {
-            int reward_money = 5;
-            money += reward_money;
-
-            std::cout << "You won $" + std::to_string(reward_money) + ". You have $" + std::to_string(money) << std::endl;
-        }
+        void award_money();
     };
 
 }
+
+#endif

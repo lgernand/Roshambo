@@ -1,18 +1,16 @@
-#include "player.h"
+#ifndef COMPUTER_PLAYER_H
+#define COMPUTER_PLAYER_H
 
-#pragma once
+#include "player.h"
 
 namespace rps
 {
     class computer_player : public player {
     public:
-        computer_player() {
+        computer_player();
 
-        }
-
-        void make_selection() override
-        {
-            this->selection = (rand() * 1.0 / RAND_MAX * 3) + 1;
-        }
+        void make_selection() override;
     };
 }
+
+#endif

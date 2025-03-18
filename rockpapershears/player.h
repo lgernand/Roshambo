@@ -1,6 +1,7 @@
-#include <iostream>
+#ifndef PLAYER_H
+#define PLAYER_H
 
-#pragma once
+#include <iostream>
 
 namespace rps
 {
@@ -8,14 +9,10 @@ namespace rps
     public:
         int selection;
 
-        virtual void make_selection()
-        {
+        virtual void make_selection();
 
-        }
-
-        int get_selection()
-        {
-            return this->selection;
-        }
+        int get_selection();
     };
 }
+
+#endif
