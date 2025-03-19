@@ -134,6 +134,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="ring.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="store.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="computer_player.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="human_player.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="ring.h" />
+    <ClInclude Include="store.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

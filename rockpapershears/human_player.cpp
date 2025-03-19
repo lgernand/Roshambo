@@ -5,13 +5,6 @@ namespace rps
 {
     human_player::human_player() 
     {
-        barber_ring* test_ring = new barber_ring();
-        best_two_of_three_ring* test_ring2 = new best_two_of_three_ring();
-        pay_day_ring* test_ring3 = new pay_day_ring();
-
-        this->rings.push_back(test_ring2);
-        this->rings.push_back(test_ring);
-        this->rings.push_back(test_ring3);
         this->base_points = 50;
 
         this->money = 0;

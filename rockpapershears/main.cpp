@@ -1,8 +1,10 @@
 #include "game.h"
+#include "store.h"
 
 int main()
 {   
     rps::game game;
+    rps::store store;
     
     for (auto i = game.selection_map.begin(); i != game.selection_map.end(); i++)
     {
@@ -24,5 +26,7 @@ int main()
 
             game.initialize_game();
         }
+
+        store.display_ring_inventory(&game.me);
     }
 }
