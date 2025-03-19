@@ -16,9 +16,11 @@ namespace rps
     void store::display_ring_inventory(human_player* player)
     {
         std::cout << std::endl << "Store: type 0 to continue to the next level" << std::endl;
+        int count = 1;
         for (auto ring : this->ring_inventory)
         {
-            std::cout << ring->ring_name + " $" + std::to_string(ring->price) << std::endl;
+            std::cout << std::to_string(count) + ". " + ring->ring_name + " $" + std::to_string(ring->price) << std::endl;
+            count++;
         }
         std::cout << std::endl;
 
