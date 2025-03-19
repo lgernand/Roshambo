@@ -4,6 +4,7 @@
 #include "player.h"
 #include "ring.h"
 #include <list>
+#include <vector>
 
 namespace rps
 {
@@ -12,7 +13,7 @@ namespace rps
         int points = 0;
 
 
-        std::list<ring*> rings;
+        std::vector<ring*> rings;
 
         human_player();
 

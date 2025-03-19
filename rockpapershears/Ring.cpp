@@ -41,7 +41,7 @@ namespace rps
 	{
 		ring_name = "Payday";
 		rarity = 1;
-		price = 5;
+		price = 7;
 	}
 
 	int pay_day_ring::apply_effect(player* player, int points) const
