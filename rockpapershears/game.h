@@ -12,12 +12,9 @@ namespace rps
     class game {
     public:
         std::map<int, std::string> selection_map;
-        rps::computer_player* comp;
-        rps::human_player* me;
+        rps::computer_player comp;
+        rps::human_player me;
         int round_result;
-        int wins;
-        int losses;
-        int ties;
         int victory_condition[5][5] = {
             // comp
 //            r p  s

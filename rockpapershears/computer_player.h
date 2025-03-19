@@ -9,7 +9,7 @@ namespace rps
     public:
         computer_player();
 
-        void make_selection() const;
+        void make_selection() const override;
     };
 }
 

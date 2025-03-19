@@ -14,8 +14,8 @@ namespace rps
         selection_map.insert(std::pair<int, std::string>(2, "Paper"));
         selection_map.insert(std::pair<int, std::string>(3, "Shears"));
 
-        comp = new computer_player();
-        me = new human_player();
+        this->comp = rps::computer_player();
+        this->me = rps::human_player();
 
         level = 0;
 
@@ -26,34 +26,34 @@ namespace rps
 
     void game::make_selections()
     {
-        me->make_selection();
-        comp->make_selection();
+        me.make_selection();
+        comp.make_selection();
     }
 
     void game::print_computer_selection()
     {
-        std::cout << std::endl << "You Selected: " + selection_map.at(me->selection) << std::endl;
-        std::cout << "Computer Selected: " + selection_map.at(comp->selection) << std::endl << std::endl;
+        std::cout << std::endl << "You Selected: " + selection_map.at(me.selection) << std::endl;
+        std::cout << "Computer Selected: " + selection_map.at(comp.selection) << std::endl << std::endl;
     }
 
     void game::determine_winner()
     {
-        round_result = this->victory_condition[me->selection - 1][comp->selection - 1];
+        round_result = this->victory_condition[me.selection - 1][comp.selection - 1];
 
         if (round_result == 1)
         {
-            wins += 1;
+            me.wins += 1;
             rounds += 1;
-            me->give_points();
+            me.give_points();
         }
         else if (round_result == -1)
         {
-            losses += 1;
+            me.losses += 1;
             rounds += 1;
         }
         else
         {
-            ties += 1;
+            me.ties += 1;
         }
     }
 
@@ -64,10 +64,10 @@ namespace rps
             ante_points *= 1.5;
         }
 
-        me->points = 0;
-        wins = 0;
-        losses = 0;
-        ties = 0;
+        me.points = 0;
+        me.wins = 0;
+        me.losses = 0;
+        me.ties = 0;
     }
 
     void game::play_round()
@@ -82,15 +82,15 @@ namespace rps
             this->print_computer_selection();
             this->determine_winner();
 
-            std::cout << std::endl << "Wins: " + std::to_string(this->wins) << " Losses: " + std::to_string(this->losses) << " Ties: " + std::to_string(this->ties) << std::endl;
-            std::cout << "You have " + std::to_string(me->points) + " points! Out of " + std::to_string(this->ante_points) + "!" << std::endl;
+            std::cout << std::endl << "Wins: " + std::to_string(me.wins) << " Losses: " + std::to_string(me.losses) << " Ties: " + std::to_string(me.ties) << std::endl;
+            std::cout << "You have " + std::to_string(me.points) + " points! Out of " + std::to_string(this->ante_points) + "!" << std::endl;
         }
 
-        if (me->points >= ante_points)
+        if (me.points >= ante_points)
         {
             level += 1;
             std::cout << std::endl << "Round Survived!" << std::endl;
-            me->award_money();
+            me.award_money();
             std::cout << std::endl << "Next Level!" << std::endl;
         }
         else

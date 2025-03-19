@@ -1,7 +1,8 @@
 #ifndef RING_H
 #define RING_H
 
-#include "game.h"
+#include <string>>
+#include "player.h"
 
 namespace rps
 {
@@ -12,7 +13,7 @@ namespace rps
 		int rarity;
 		int price;
 
-		virtual int apply_effect(human_player* player, int base_points) const = 0;
+		virtual int apply_effect(player* player, int points) const = 0;
 	};
 
 	class barber_ring : public ring
@@ -20,7 +21,23 @@ namespace rps
 	public:
 		barber_ring();
 
-		int apply_effect(human_player* player, int base_points);
+		int apply_effect(player* player, int points) const override;
+	};
+
+	class best_two_of_three_ring : public ring
+	{
+	public:
+		best_two_of_three_ring();
+
+		int apply_effect(player* player, int points) const override;
+	};
+
+	class pay_day_ring : public ring
+	{
+	public:
+		pay_day_ring();
+
+		int apply_effect(player* player, int points) const override;
 	};
 }
 #endif
