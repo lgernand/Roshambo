@@ -15,9 +15,6 @@ namespace rps
         rps::computer_player comp;
         rps::human_player me;
         int round_result;
-        int wins;
-        int losses;
-        int ties;
         int victory_condition[5][5] = {
             // comp
 //            r p  s

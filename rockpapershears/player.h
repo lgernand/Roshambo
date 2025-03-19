@@ -9,6 +9,14 @@ namespace rps
     public:
         mutable int selection;
 
+        int base_points;
+
+        int wins;
+        int losses;
+        int ties;
+
+        int money;
+
         virtual void make_selection() const = 0;
 
         int get_selection();

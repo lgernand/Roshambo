@@ -10,7 +10,7 @@ namespace rps
     class human_player : public player {
     public:
         int points = 0;
-        int money = 0;
+
 
         std::list<ring*> rings;
 
