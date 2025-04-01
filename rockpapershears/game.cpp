@@ -61,7 +61,7 @@ namespace rps
     {
         if (level > 0)
         {
-            ante_points *= 1.5;
+            ante_points *= 2;
         }
 
         me.points = 0;
