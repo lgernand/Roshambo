@@ -2,19 +2,26 @@
 #include "olcUTIL_Geometry2D.h"
 #include "olcPixelGameEngine.h"
 #include "game_state.h"
-#include "game.h"
-#include "store.h"
 
 class roshambo : public olc::PixelGameEngine
 {
 private:
     rps::state_controller state_controller;
 
+    std::map<int, std::string> selection_map;
+    std::map<int, olc::v_2d<float>> selection_button_pos_map;
+
+    olc::v_2d<float> rps_button_size = { 30.0f, 15.0f };
+
+    std::string selection = "";
+    std::string computer_selection = "";
+
     float target_circle_pos_x;
     float target_circle_pos_y;
     float target_circle_radius;
 
     float curr_score;
+    float multiplier;
 
     olc::utils::geom2d::circle<float> target_circle;
 
@@ -24,6 +31,16 @@ public:
     {
         // Name your application
         sAppName = "Roshambo";
+
+        selection_map.insert(std::pair<int, std::string>(1, { "Rock" }));
+        selection_map.insert(std::pair<int, std::string>(2, { "Paper" }));
+        selection_map.insert(std::pair<int, std::string>(3, { "Shears" }));
+
+        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(1, { 15.0f, ScreenHeight() / 1.5f }));
+        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(2, { 55.0f, ScreenHeight() / 1.5f }));
+        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(3, { 95.0f, ScreenHeight() / 1.5f }));
+
+        
 
         curr_score = 10;
 
@@ -38,12 +55,15 @@ public:
     bool OnUserCreate() override
     {
         // Called once at the start, so create things here
+        srand(time(NULL));
+
         state_controller.init();
         return true;
     }
 
     bool OnUserUpdate(float fElapsedTime) override
     {
+
         if (state_controller.get_state() == rps::ROSHAMBO)
         {
 
@@ -85,7 +105,7 @@ public:
 
                     shrinking_circle_radius = 35.0f;
                     target_circle_pos_x = rand() % ScreenWidth();
-                    target_circle_pos_x = rand() % ScreenHeight();
+                    target_circle_pos_y = rand() % ScreenHeight();
 
                     target_circle = olc::utils::geom2d::circle({ target_circle_pos_x,target_circle_pos_y }, target_circle_radius);
 
@@ -99,9 +119,40 @@ public:
             else
             {
                 shrinking_circle_radius -= .005;
-
             }
         }
+
+        if (state_controller.get_state() == rps::RPS)
+        {
+            Clear(olc::DARK_GREEN);
+
+            for (auto button : selection_button_pos_map)
+            {
+                DrawRect(button.second, rps_button_size, olc::WHITE);
+            }
+
+            if (GetMouse(0).bPressed)
+            {
+                olc::v_2d<float> mouse_pos = olc::v_2d<float>(float(GetMouseX()), float(GetMouseY()));
+                for (auto button : selection_button_pos_map)
+                {
+                    auto rect = olc::utils::geom2d::rect<float>({ button.second, rps_button_size });
+                    if (olc::utils::geom2d::contains(rect, mouse_pos))
+                    {
+                        selection = selection_map[button.first];
+                        state_controller.get_game_state()->game->make_selections(button.first);
+                        computer_selection = state_controller.get_game_state()->game->get_computer_selection();
+                        state_controller.transition_to_state(rps::EVALUATE_RPS);
+                    }
+                }
+            }
+        }
+
+
+
+        DrawString({ 0 , 0 }, std::to_string(curr_score), olc::WHITE);
+        DrawString({ 0 , 100 }, selection, olc::WHITE);
+        DrawString({ 150, 0 }, computer_selection, olc::WHITE);
 
         return true;
     }

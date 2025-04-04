@@ -17,7 +17,7 @@ namespace rps
 
         int money;
 
-        virtual void make_selection() const = 0;
+        virtual void make_selection(int selection) const = 0;
 
         int get_selection();
     };

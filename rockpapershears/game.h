@@ -35,9 +35,11 @@ namespace rps
 
         void initialize_game();
 
-        void make_selections();
+        void make_selections(int player_selection);
 
         void print_computer_selection();
+
+        std::string get_computer_selection();
 
         void determine_winner();
 

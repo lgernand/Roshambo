@@ -7,7 +7,7 @@ namespace rps
 
     }
 
-    void computer_player::make_selection() const
+    void computer_player::make_selection(int selection) const
     {
         this->selection = (rand() * 1.0 / RAND_MAX * 3) + 1;
     }

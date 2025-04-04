@@ -14,6 +14,11 @@ namespace rps
 		this->end_of_state = false;
 	}
 
+	void roshambo_state::init_state()
+	{
+		game->initialize_round();
+	}
+
 	void roshambo_state::update_state()
 	{
 		//initiate roshambo
@@ -33,17 +38,43 @@ namespace rps
 		this->state = RPS;
 	}
 
+	void rps_state::init_state()
+	{
+
+	}
+
 	void rps_state::update_state()
 	{
 		//initiate rps
 	}
 
 
+	//EVALUATE RPS METHODS/////////////////////////////////////////////////////////////////
+	evaluate_rps_state::evaluate_rps_state()
+	{
+		this->state = EVALUATE_RPS;
+	}
+
+	void evaluate_rps_state::init_state()
+	{
+		game->determine_winner();
+	}
+
+	void evaluate_rps_state::update_state()
+	{
+		//
+	}
+
 
 	//STORE STATE METHODS////////////////////////////////////////////////////////////////
 	store_state::store_state()
 	{
 		this->state = STORE;
+	}
+
+	void store_state::init_state()
+	{
+
 	}
 
 	void store_state::update_state()
@@ -60,6 +91,8 @@ namespace rps
 
 	void state_controller::transition_to_state(state state)
 	{
+		rps::game* temp_game = curr_state->game;
+		
 		delete curr_state;
 
 		if (state == ROSHAMBO)
@@ -76,6 +109,12 @@ namespace rps
 		{
 			curr_state = new store_state();
 		}
+		if (state == EVALUATE_RPS)
+		{
+			curr_state = new evaluate_rps_state();
+		}
+
+		curr_state->game = temp_game;
 	}
 
 	state state_controller::get_state()

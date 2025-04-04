@@ -10,10 +10,9 @@ namespace rps
         this->money = 0;
     }
 
-    void human_player::make_selection() const
+    void human_player::make_selection(int selection) const
     {
-        std::cout << "Make a selection: ";
-        std::cin >> this->selection;
+        this->selection = selection;
     }
 
     void human_player::give_points()

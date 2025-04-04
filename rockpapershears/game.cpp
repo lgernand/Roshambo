@@ -24,16 +24,21 @@ namespace rps
         ante_points = 25;
     }
 
-    void game::make_selections()
+    void game::make_selections(int player_selection)
     {
-        me.make_selection();
-        comp.make_selection();
+        me.make_selection(player_selection);
+        comp.make_selection(player_selection);
     }
 
     void game::print_computer_selection()
     {
         std::cout << std::endl << "You Selected: " + selection_map.at(me.selection) << std::endl;
         std::cout << "Computer Selected: " + selection_map.at(comp.selection) << std::endl << std::endl;
+    }
+
+    std::string game::get_computer_selection()
+    {
+        return selection_map.at(comp.selection);
     }
 
     void game::determine_winner()
@@ -78,7 +83,7 @@ namespace rps
 
         while (rounds < 3)
         {
-            this->make_selections();
+            this->make_selections(1);
             this->print_computer_selection();
             this->determine_winner();
 

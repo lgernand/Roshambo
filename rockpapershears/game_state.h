@@ -2,6 +2,7 @@
 #ifndef GAME_STATE_H
 #define GAME_STATE_H
 
+#include "game.h"
 
 namespace rps
 {
@@ -9,15 +10,23 @@ namespace rps
 	{
 		ROSHAMBO,
 		RPS,
+		EVALUATE_RPS,
 		STORE
 	};
 
 	class game_state
 	{
 	public:
+		game* game;
 		state state;
 		bool end_of_state;
 
+		game_state()
+		{
+			this->game = new rps::game();
+		}
+
+		virtual void init_state() = 0;
 		virtual void update_state() = 0;
 	};
 
@@ -27,6 +36,7 @@ namespace rps
 		int repititions;
 
 		roshambo_state();
+		void init_state() override;
 		void update_state() override;
 	};
 
@@ -34,6 +44,15 @@ namespace rps
 	{
 	public:
 		rps_state();
+		void init_state() override;
+		void update_state() override;
+	};
+
+	class evaluate_rps_state : public game_state
+	{
+	public:
+		evaluate_rps_state();
+		void init_state() override;
 		void update_state() override;
 	};
 
@@ -41,6 +60,7 @@ namespace rps
 	{
 	public:
 		store_state();
+		void init_state() override;
 		void update_state();
 	};
 
@@ -48,6 +68,7 @@ namespace rps
 	{
 	private:
 		game_state* curr_state = nullptr;
+
 
 	public:
 		void init();
