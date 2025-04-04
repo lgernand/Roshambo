@@ -45,7 +45,7 @@ namespace rps
 
 	void rps_state::update_state()
 	{
-		//initiate rps
+
 	}
 
 
@@ -58,6 +58,7 @@ namespace rps
 	void evaluate_rps_state::init_state()
 	{
 		game->determine_winner();
+		end_of_state = true;
 	}
 
 	void evaluate_rps_state::update_state()
@@ -115,6 +116,7 @@ namespace rps
 		}
 
 		curr_state->game = temp_game;
+		curr_state->init_state();
 	}
 
 	state state_controller::get_state()

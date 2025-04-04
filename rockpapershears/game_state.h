@@ -17,6 +17,7 @@ namespace rps
 	class game_state
 	{
 	public:
+		int repititions;
 		game* game;
 		state state;
 		bool end_of_state;
@@ -33,7 +34,6 @@ namespace rps
 	class roshambo_state : public game_state
 	{
 	public:
-		int repititions;
 
 		roshambo_state();
 		void init_state() override;

@@ -143,6 +143,11 @@ public:
                         state_controller.get_game_state()->game->make_selections(button.first);
                         computer_selection = state_controller.get_game_state()->game->get_computer_selection();
                         state_controller.transition_to_state(rps::EVALUATE_RPS);
+                        
+                        if (state_controller.get_game_state()->end_of_state == true)
+                        {
+                            state_controller.transition_to_state(rps::RPS);
+                        }
                     }
                 }
             }
@@ -153,6 +158,7 @@ public:
         DrawString({ 0 , 0 }, std::to_string(curr_score), olc::WHITE);
         DrawString({ 0 , 100 }, selection, olc::WHITE);
         DrawString({ 150, 0 }, computer_selection, olc::WHITE);
+        DrawString({ 0, ScreenHeight() - 15 }, std::to_string(state_controller.get_game_state()->game->me.wins) + "/ 3", olc::WHITE);
 
         return true;
     }
