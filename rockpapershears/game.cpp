@@ -5,11 +5,7 @@ namespace rps
 
     game::game()
     {
-        initialize_game();
-    }
 
-    void game::initialize_game()
-    {
         selection_map.insert(std::pair<int, std::string>(1, "Rock"));
         selection_map.insert(std::pair<int, std::string>(2, "Paper"));
         selection_map.insert(std::pair<int, std::string>(3, "Shears"));
@@ -17,6 +13,11 @@ namespace rps
         this->comp = rps::computer_player();
         this->me = rps::human_player();
 
+        initialize_game();
+    }
+
+    void game::initialize_game()
+    {
         level = 0;
 
         game_over = false;
@@ -24,6 +25,13 @@ namespace rps
         curr_score = 20;
         multiplier = 1;
         total_score = 0;
+
+
+        me.points = 0;
+        me.wins = 0;
+        me.losses = 0;
+        me.ties = 0;
+        rounds = 0;
 
         ante_points = 300;
     }
@@ -72,6 +80,12 @@ namespace rps
         {
             ante_points *= 2;
         }
+        
+        curr_score = 20;
+        multiplier = 1;
+        total_score = 0;
+        level += 1;
+        rounds = 0;
 
         me.points = 0;
         me.wins = 0;

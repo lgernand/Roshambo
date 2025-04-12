@@ -203,11 +203,24 @@ public:
             if (state_controller.get_game()->total_score > state_controller.get_game()->ante_points)
             {
                 DrawString({ ScreenWidth() / 2, ScreenHeight() / 2 }, "YOU WIN", olc::WHITE);
+
+                if (GetKey(olc::ENTER).bPressed)
+                {
+                    state_controller.get_game()->initialize_round();
+                    state_controller.transition_to_state(rps::ROSHAMBO);
+                }
             }
             else {
                 Clear(olc::DARK_RED);
                 DrawString({ ScreenWidth() / 2, ScreenHeight() / 2 }, "YOU LOSE", olc::WHITE);
+                if (GetKey(olc::ENTER).bPressed)
+                {
+                    state_controller.get_game()->initialize_game();
+                    state_controller.transition_to_state(rps::ROSHAMBO);
+                }
             }
+
+            DrawString({ ScreenWidth() / 6, (ScreenHeight() / 2) + 10 }, "HIT ENTER TO CONTINUE", olc::WHITE);
         }
 
         DisplayHUD(state_controller.get_game());
