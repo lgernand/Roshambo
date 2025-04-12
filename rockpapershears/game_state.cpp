@@ -16,7 +16,7 @@ namespace rps
 
 	void roshambo_state::init_state()
 	{
-		game->initialize_round();
+
 	}
 
 	void roshambo_state::update_state()
@@ -66,6 +66,22 @@ namespace rps
 		//
 	}
 
+	//EVALUATE RPS METHODS/////////////////////////////////////////////////////////////////
+	evaluate_stage_state::evaluate_stage_state()
+	{
+		this->state = EVALUATE_STAGE;
+	}
+
+	void evaluate_stage_state::init_state()
+	{
+		game->determine_stage_score();
+		end_of_state = true;
+	}
+
+	void evaluate_stage_state::update_state()
+	{
+		//
+	}
 
 	//STORE STATE METHODS////////////////////////////////////////////////////////////////
 	store_state::store_state()
@@ -114,6 +130,10 @@ namespace rps
 		{
 			curr_state = new evaluate_rps_state();
 		}
+		if (state == EVALUATE_STAGE)
+		{
+			curr_state = new evaluate_stage_state();
+		}
 
 		curr_state->game = temp_game;
 		curr_state->init_state();
@@ -127,6 +147,11 @@ namespace rps
 	game_state* state_controller::get_game_state()
 	{
 		return this->curr_state;
+	}
+
+	game* state_controller::get_game()
+	{
+		return this->get_game_state()->game;
 	}
 
 	state_controller::~state_controller()

@@ -21,7 +21,11 @@ namespace rps
 
         game_over = false;
 
-        ante_points = 25;
+        curr_score = 20;
+        multiplier = 1;
+        total_score = 0;
+
+        ante_points = 300;
     }
 
     void game::make_selections(int player_selection)
@@ -49,7 +53,7 @@ namespace rps
         {
             me.wins += 1;
             rounds += 1;
-            me.give_points();
+            this->multiplier += 1;
         }
         else if (round_result == -1)
         {
@@ -102,5 +106,10 @@ namespace rps
         {
             game_over = true;
         }
+    }
+
+    void game::determine_stage_score()
+    {
+        this->total_score = this->curr_score * this->multiplier;
     }
 };

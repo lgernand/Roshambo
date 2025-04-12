@@ -23,6 +23,10 @@ namespace rps
             /*s*/{ -1,1,0 },
         };
 
+        float curr_score;
+        float multiplier;
+        float total_score;
+
         int ante_points;
 
         int rounds;
@@ -46,6 +50,8 @@ namespace rps
         void initialize_round();
 
         void play_round();
+
+        void determine_stage_score();
     };
 }
 #endif

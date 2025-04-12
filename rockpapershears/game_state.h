@@ -11,6 +11,7 @@ namespace rps
 		ROSHAMBO,
 		RPS,
 		EVALUATE_RPS,
+		EVALUATE_STAGE,
 		STORE
 	};
 
@@ -56,6 +57,14 @@ namespace rps
 		void update_state() override;
 	};
 
+	class evaluate_stage_state : public game_state
+	{
+	public:
+		evaluate_stage_state();
+		void init_state() override;
+		void update_state() override;
+	};
+
 	class store_state : public game_state
 	{
 	public:
@@ -78,6 +87,8 @@ namespace rps
 		state get_state();
 
 		game_state* get_game_state();
+
+		game* get_game();
 
 		~state_controller();
 

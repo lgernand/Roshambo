@@ -11,7 +11,7 @@ private:
     std::map<int, std::string> selection_map;
     std::map<int, olc::v_2d<float>> selection_button_pos_map;
 
-    olc::v_2d<float> rps_button_size = { 30.0f, 15.0f };
+    olc::v_2d<float> rps_button_size = { 50.0f, 15.0f };
 
     std::string selection = "";
     std::string computer_selection = "";
@@ -22,6 +22,7 @@ private:
 
     float curr_score;
     float multiplier;
+    float total_score;
 
     olc::utils::geom2d::circle<float> target_circle;
 
@@ -37,12 +38,14 @@ public:
         selection_map.insert(std::pair<int, std::string>(3, { "Shears" }));
 
         selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(1, { 15.0f, ScreenHeight() / 1.5f }));
-        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(2, { 55.0f, ScreenHeight() / 1.5f }));
-        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(3, { 95.0f, ScreenHeight() / 1.5f }));
+        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(2, { 75.0f, ScreenHeight() / 1.5f }));
+        selection_button_pos_map.insert(std::pair<int, olc::v_2d<float>>(3, { 135.0f, ScreenHeight() / 1.5f }));
 
         
 
         curr_score = 10;
+        multiplier = 1;
+        total_score = 0;
 
         target_circle_radius = 10.0f;
         target_circle_pos_x = rand() % ScreenWidth();
@@ -52,12 +55,26 @@ public:
         target_circle = olc::utils::geom2d::circle({ target_circle_pos_x,target_circle_pos_y }, target_circle_radius);
     }
 
+    void DisplayHUD(rps::game* game)
+    {
+
+        DrawString({ 0 , 0 }, std::to_string(game->curr_score) + " x " + std::to_string(game->multiplier), olc::WHITE);
+        DrawString({ 0 , 10 }, std::to_string(game->total_score) + " / " + std::to_string(game->ante_points), olc::WHITE);
+        DrawString({ 0 , 100 }, selection, olc::WHITE);
+        DrawString({ 170, 50 }, computer_selection, olc::WHITE);
+        DrawString({ 0, ScreenHeight() - 15 }, std::to_string(state_controller.get_game()->me.wins) + " / 3", olc::WHITE);
+        DrawString({ ScreenWidth() - 45, 0}, std::to_string(state_controller.get_game()->me.losses) + " / 3", olc::WHITE);
+
+        DrawString({ ScreenWidth() - 80, ScreenHeight() - 15}, "Level: " + std::to_string(state_controller.get_game()->level), olc::WHITE);
+    }
+
     bool OnUserCreate() override
     {
         // Called once at the start, so create things here
         srand(time(NULL));
 
         state_controller.init();
+        state_controller.get_game_state()->game->initialize_round();
         return true;
     }
 
@@ -69,10 +86,27 @@ public:
 
             Clear(olc::DARK_BLUE);
 
+            std::string ro_sham_or_bo;
+
+            if (state_controller.get_game_state()->repititions == 0)
+            {
+                ro_sham_or_bo = "RO!";
+            }
+
+            if (state_controller.get_game_state()->repititions == 1)
+            {
+                ro_sham_or_bo = "SHAM!";
+            }
+
+            if (state_controller.get_game_state()->repititions == 2)
+            {
+                ro_sham_or_bo = "BO!";
+            }
+
+            DrawString({ ScreenWidth() / 2, ScreenHeight() / 2 }, ro_sham_or_bo, olc::DARK_RED);
+
             FillCircle(target_circle_pos_x, target_circle_pos_y, target_circle_radius, olc::WHITE);
             DrawCircle(target_circle_pos_x, target_circle_pos_y, shrinking_circle_radius, olc::RED);
-
-            DrawString({ 0 , 0 }, std::to_string(curr_score), olc::WHITE);
 
             if (GetMouse(0).bPressed)
             {
@@ -101,7 +135,7 @@ public:
                         Clear(olc::RED);
                     }
 
-                    curr_score += points;
+                    state_controller.get_game()->curr_score += points;
 
                     shrinking_circle_radius = 35.0f;
                     target_circle_pos_x = rand() % ScreenWidth();
@@ -112,6 +146,10 @@ public:
                     state_controller.get_game_state()->update_state();
                     if (state_controller.get_game_state()->end_of_state == true)
                     {
+                        if (state_controller.get_game_state()->game->rounds == 3)
+                        {
+                            state_controller.transition_to_state(rps::STORE);
+                        }
                         state_controller.transition_to_state(rps::RPS);
                     }
                 }
@@ -129,6 +167,7 @@ public:
             for (auto button : selection_button_pos_map)
             {
                 DrawRect(button.second, rps_button_size, olc::WHITE);
+                DrawString(button.second+5, selection_map.at(button.first), olc::WHITE);
             }
 
             if (GetMouse(0).bPressed)
@@ -146,19 +185,33 @@ public:
                         
                         if (state_controller.get_game_state()->end_of_state == true)
                         {
-                            state_controller.transition_to_state(rps::RPS);
+                            if (state_controller.get_game()->rounds >= 3)
+                            {
+                                state_controller.transition_to_state(rps::EVALUATE_STAGE);
+                            }
+                            else {
+                                state_controller.transition_to_state(rps::ROSHAMBO);
+                            }
                         }
                     }
                 }
             }
         }
 
+        if (state_controller.get_state() == rps::EVALUATE_STAGE)
+        {
+            if (state_controller.get_game()->total_score > state_controller.get_game()->ante_points)
+            {
+                DrawString({ ScreenWidth() / 2, ScreenHeight() / 2 }, "YOU WIN", olc::WHITE);
+            }
+            else {
+                Clear(olc::DARK_RED);
+                DrawString({ ScreenWidth() / 2, ScreenHeight() / 2 }, "YOU LOSE", olc::WHITE);
+            }
+        }
 
+        DisplayHUD(state_controller.get_game());
 
-        DrawString({ 0 , 0 }, std::to_string(curr_score), olc::WHITE);
-        DrawString({ 0 , 100 }, selection, olc::WHITE);
-        DrawString({ 150, 0 }, computer_selection, olc::WHITE);
-        DrawString({ 0, ScreenHeight() - 15 }, std::to_string(state_controller.get_game_state()->game->me.wins) + "/ 3", olc::WHITE);
 
         return true;
     }
