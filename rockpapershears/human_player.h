@@ -17,7 +17,7 @@ namespace rps
 
         human_player();
 
-        void make_selection() const override;
+        void make_selection(int selection) const override;
 
         void give_points();
 

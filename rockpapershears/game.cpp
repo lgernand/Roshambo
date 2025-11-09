@@ -5,11 +5,7 @@ namespace rps
 
     game::game()
     {
-        initialize_game();
-    }
 
-    void game::initialize_game()
-    {
         selection_map.insert(std::pair<int, std::string>(1, "Rock"));
         selection_map.insert(std::pair<int, std::string>(2, "Paper"));
         selection_map.insert(std::pair<int, std::string>(3, "Shears"));
@@ -17,23 +13,44 @@ namespace rps
         this->comp = rps::computer_player();
         this->me = rps::human_player();
 
+        initialize_game();
+    }
+
+    void game::initialize_game()
+    {
         level = 0;
 
         game_over = false;
 
-        ante_points = 25;
+        curr_score = 20;
+        multiplier = 1;
+        total_score = 0;
+
+
+        me.points = 0;
+        me.wins = 0;
+        me.losses = 0;
+        me.ties = 0;
+        rounds = 0;
+
+        ante_points = 300;
     }
 
-    void game::make_selections()
+    void game::make_selections(int player_selection)
     {
-        me.make_selection();
-        comp.make_selection();
+        me.make_selection(player_selection);
+        comp.make_selection(player_selection);
     }
 
     void game::print_computer_selection()
     {
         std::cout << std::endl << "You Selected: " + selection_map.at(me.selection) << std::endl;
         std::cout << "Computer Selected: " + selection_map.at(comp.selection) << std::endl << std::endl;
+    }
+
+    std::string game::get_computer_selection()
+    {
+        return selection_map.at(comp.selection);
     }
 
     void game::determine_winner()
@@ -44,7 +61,7 @@ namespace rps
         {
             me.wins += 1;
             rounds += 1;
-            me.give_points();
+            this->multiplier += 1;
         }
         else if (round_result == -1)
         {
@@ -63,6 +80,12 @@ namespace rps
         {
             ante_points *= 2;
         }
+        
+        curr_score = 20;
+        multiplier = 1;
+        total_score = 0;
+        level += 1;
+        rounds = 0;
 
         me.points = 0;
         me.wins = 0;
@@ -78,7 +101,7 @@ namespace rps
 
         while (rounds < 3)
         {
-            this->make_selections();
+            this->make_selections(1);
             this->print_computer_selection();
             this->determine_winner();
 
@@ -97,5 +120,10 @@ namespace rps
         {
             game_over = true;
         }
+    }
+
+    void game::determine_stage_score()
+    {
+        this->total_score = this->curr_score * this->multiplier;
     }
 };

@@ -23,6 +23,10 @@ namespace rps
             /*s*/{ -1,1,0 },
         };
 
+        float curr_score;
+        float multiplier;
+        float total_score;
+
         int ante_points;
 
         int rounds;
@@ -35,15 +39,19 @@ namespace rps
 
         void initialize_game();
 
-        void make_selections();
+        void make_selections(int player_selection);
 
         void print_computer_selection();
+
+        std::string get_computer_selection();
 
         void determine_winner();
 
         void initialize_round();
 
         void play_round();
+
+        void determine_stage_score();
     };
 }
 #endif
